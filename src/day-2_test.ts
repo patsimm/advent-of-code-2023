@@ -12,7 +12,7 @@ Deno.test(function solveTestInput() {
   assertEquals(result, 8)
 })
 
-Deno.test(function solveTestInput() {
+Deno.test(function solve2TestInput() {
   const result = solve2(exampleInput)
   assertEquals(result, 2286)
 })

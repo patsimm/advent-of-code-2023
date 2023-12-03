@@ -9,4 +9,6 @@ declare global {
     typedKeys<T>(obj: T): Array<keyof T>
   }
 }
+
+// deno-lint-ignore no-explicit-any
 Object.typedKeys = Object.keys as any
