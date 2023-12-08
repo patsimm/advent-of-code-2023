@@ -1,17 +1,10 @@
-import { readInput, splitLines } from "./helper.ts"
+import { parseNumbers, readInput, splitLines } from "./helper.ts"
 
 type Card = {
   line: string
   winningNumbers: number[]
   handNumbers: number[]
 }
-
-const parseNumbers = (numbers: string) => {
-  return numbers.trim().split(" ").filter((num) => num !== "").map((num) =>
-    Number(num.trim())
-  )
-}
-
 const parseCard = (card: string) => {
   const [winning, hand] = card.split("|")
 
@@ -22,7 +15,7 @@ const parseCard = (card: string) => {
 }
 
 const parseLine = (line: string): Card => {
-  const [cardNumber, card] = line.split(":")
+  const [_, card] = line.split(":")
   return { ...parseCard(card), line }
 }
 
@@ -62,7 +55,7 @@ export const solve2 = (input: string): number => {
 
   for (const cardIndex of cards.keys()) {
     const amountWinning = winningNumbers(cards[cardIndex])
-    console.log(amountWinning)
+
     const amountCurrentCard = cardAmount.get(cards[cardIndex]) || 1
     for (let i = 1; i <= amountWinning; i++) {
       const wonCard = cards.at(cardIndex + i)
@@ -71,8 +64,6 @@ export const solve2 = (input: string): number => {
       cardAmount.set(wonCard, amountWonCard + amountCurrentCard)
     }
   }
-
-  console.log([...cardAmount.values()])
 
   return [...cardAmount.values()].reduce((prev, curr) => prev + curr, 0)
 }
