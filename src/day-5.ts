@@ -71,7 +71,6 @@ export const applyTable = (table: MapTable, value: number) => {
   )
   if (!range) {
     const nextRange = table.ranges.find((range) => range.srcStart > value)
-    console.log(nextRange)
     return {
       mappedValue: value,
       rangeDestEnd: nextRange ? nextRange.srcStart - 1 : Infinity,

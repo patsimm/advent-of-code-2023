@@ -1,14 +1,13 @@
-export const readInput = async (filename: string) => {
-  return await Deno.readTextFile(`src/${filename}.txt`)
-}
+export const readInput = async (filename: string) =>
+  (await Deno.readTextFile(`src/inputs/${filename}.txt`)).trim()
 
 export const splitLines = (text: string) => text.split("\n")
 
-export const parseNumbers = (numbers: string) => {
-  return numbers.trim().split(" ").filter((num) => num !== "").map((num) =>
-    Number(num.trim())
-  )
-}
+export const splitWhitespace = (text: string) =>
+  text.trim().split(" ").filter((num) => num !== "")
+
+export const parseNumbers = (numbers: string) =>
+  splitWhitespace(numbers).map((num) => Number(num.trim()))
 
 declare global {
   interface ObjectConstructor {
