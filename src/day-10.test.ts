@@ -9,7 +9,7 @@ const exampleInput = `.....
 
 Deno.test(function solveTestInput() {
   const result = solve(exampleInput)
-  assertEquals(result, 35)
+  assertEquals(result, 4)
 })
 
 Deno.test(function solveTestInput2() {

@@ -28,31 +28,32 @@ const charEntityMap = {
 } as const
 
 const isPartType = (entityType: EntityType): entityType is PipeType => {
-  return entityType != "start" && entityType != "ground"
+  return entityType != "ground" && entityType != "start"
 }
 
 const partConnectionDeltas: { [key in PipeType]: Vector[] } = {
   pipe_vertical: [[0, 1], [0, -1]],
   pipe_horizontal: [[1, 0], [-1, 0]],
-  bend_ne: [[1, 0], [0, 1]],
-  bend_se: [[-1, 0], [0, 1]],
-  bend_nw: [[1, 0], [0, -1]],
-  bend_sw: [[-1, 0], [0, -1]],
+  bend_ne: [[1, 0], [0, -1]],
+  bend_se: [[1, 0], [0, 1]],
+  bend_nw: [[-1, 0], [0, -1]],
+  bend_sw: [[-1, 0], [0, 1]],
 }
 
-const connectingPositions = (currentPos: Vector, pipe: PipeType) => {
+const connectingPositions = (currentPos: Vector, pipe: PipeType | "start") => {
+  if (pipe === "start") {
+    return neighbors(currentPos)
+  }
   return partConnectionDeltas[pipe].map((delta) => add(currentPos, delta))
 }
 
 const nextPosition = (currPos: Vector, prevPos: Vector, pipe: PipeType) => {
-  const connections = partConnectionDeltas[pipe].map((delta) =>
-    add(currPos, delta)
-  )
+  const connections = connectingPositions(currPos, pipe)
 
-  if (connections[0] === prevPos) {
+  if (equals(connections[0], prevPos)) {
     return connections[1]
   }
-  if (connections[1] === prevPos) {
+  if (equals(connections[1], prevPos)) {
     return connections[0]
   }
   throw new Error("Previous position is not connected!")
@@ -62,6 +63,7 @@ type EntityType = (typeof charEntityMap)[keyof typeof charEntityMap]
 type PipeType = Exclude<EntityType, "ground" | "start">
 
 type ParsedInput = {
+  size: Vector
   startPosition: Vector
   grid: EntityType[][]
 }
@@ -73,20 +75,17 @@ const parseEntityType = (char: string) => {
 const parse = (input: string): ParsedInput => {
   const grid: EntityType[][] = []
   let startPosition: Vector | null = null
-  walkGrid(
-    input,
-    (char, [x, y]) => {
-      if (grid[x] == undefined) {
-        grid[x] = []
-      }
+  const size = walkGrid(input, (char, [x, y]) => {
+    if (grid[x] == undefined) {
+      grid[x] = []
+    }
 
-      const type = parseEntityType(char)
-      if (type === "start") startPosition = [x, y]
-      grid[x][y] = type
-    },
-  )
+    const type = parseEntityType(char)
+    if (type === "start") startPosition = [x, y]
+    grid[x][y] = type
+  })
   if (startPosition === null) throw new Error("Start position is not defined")
-  return { startPosition, grid }
+  return { startPosition, grid, size }
 }
 
 const isNeighbor = (a: Vector, b: Vector) => {
@@ -97,7 +96,10 @@ const isConnected = (grid: EntityType[][], a: Vector, b: Vector) => {
   const typeA = grid[a[0]][a[1]]
   const typeB = grid[b[0]][b[1]]
 
-  if (!isPartType(typeA) || !isPartType(typeB)) return false
+  if (
+    !(isPartType(typeA) || typeA === "start") ||
+    !(isPartType(typeB) || typeB === "start")
+  ) return false
   const connectionsA = connectingPositions(a, typeA)
   const connectionsB = connectingPositions(b, typeB)
 
@@ -106,53 +108,35 @@ const isConnected = (grid: EntityType[][], a: Vector, b: Vector) => {
   return aConnectedToB && bConnectedToA
 }
 
-const walk = (
-  grid: EntityType[][],
-  start: Vector,
-) => {
-  const type = grid[start[0]][start[1]]
-  if (!isPartType(type)) {
-    throw new Error("loop is not closed")
-  }
-
-  const startConnections = neighbors(start)
-    .filter((neighbor) => isConnected(grid, neighbor, start))
+const walk = (grid: EntityType[][], start: Vector) => {
+  const startConnections = neighbors(start).filter((neighbor) =>
+    isConnected(grid, neighbor, start)
+  )
 
   if (startConnections.length != 2) {
     throw new Error("Start is not connected to exactly 2 pipes")
   }
 
-  const findPrevStart = (curr: Vector) => {
-    const others = startConnections.filter((startConnection) =>
-      !equals(startConnection, curr)
-    )
-    if (!(others.length === 1)) throw new Error("find previous failed")
-    return others[0]
-  }
-
-  let [currA, currB] = connectingPositions(start, type)
-  let [prevA, prevB]: [Vector, Vector] = [
-    findPrevStart(currA),
-    findPrevStart(currB),
-  ]
-  let step = 0
-  while (isNeighbor(currA, currB)) {
-    const nextA = nextPosition(currA, prevA, type)
-    const nextB = nextPosition(currB, prevB, type)
-
-    if (connectionsA[0] === nextDirA) {
-      walk(grid, next[1], curr, currentSteps + 1)
+  let curr = startConnections[0]
+  let prev = start
+  const loopPipes: Vector[] = []
+  while (!equals(curr, start)) {
+    loopPipes.push(curr)
+    const type = grid[curr[0]][curr[1]]
+    if (!isPartType(type)) {
+      throw new Error("loop is not closed")
     }
-    if (next[1] === prev) {
-      walk(grid, next[0], curr, currentSteps + 1)
-    }
+    const next = nextPosition(curr, prev, type)
+    prev = curr
+    curr = next
   }
+  return loopPipes
 }
 
 export const solve = (input: string): number => {
   const parsed = parse(input)
-  console.log(parsed)
-  return 0
+  const loopPipes = walk(parsed.grid, parsed.startPosition)
+  return Math.ceil(loopPipes.length / 2)
 }
 
 export const solve2 = (input: string): number => {
