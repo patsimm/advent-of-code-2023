@@ -185,5 +185,5 @@ export const solve2 = (input: string): number => {
   return Math.min(...locations)
 }
 
-console.log(solve(await readInput("day-5")))
-console.log(solve2(await readInput("day-5")))
+console.log(solve(await readInput("day_5")))
+console.log(solve2(await readInput("day_5")))

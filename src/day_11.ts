@@ -106,5 +106,5 @@ export const solve = (input: string, amount: number): number => {
   return sum
 }
 
-console.log(solve(await readInput("day-11"), 1))
-console.log(solve(await readInput("day-11"), 1000000 - 1))
+console.log(solve(await readInput("day_11"), 1))
+console.log(solve(await readInput("day_11"), 1000000 - 1))

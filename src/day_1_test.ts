@@ -1,5 +1,5 @@
 import { assertEquals } from "https://deno.land/std@0.208.0/assert/mod.ts"
-import { getDigitAtPosition, isStringAtPosition, solve } from "./day-1.ts"
+import { getDigitAtPosition, isStringAtPosition, solve } from "./day_1.ts"
 
 const exampleInput = `1abc2
 pqr3stu8vwx

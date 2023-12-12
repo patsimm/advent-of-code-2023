@@ -94,5 +94,5 @@ export const solve2 = (input: string): number => {
   }, 0)
 }
 
-console.log(solve(await readInput("day-2")))
-console.log(solve2(await readInput("day-2")))
+console.log(solve(await readInput("day_2")))
+console.log(solve2(await readInput("day_2")))

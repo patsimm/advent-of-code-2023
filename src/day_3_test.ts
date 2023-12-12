@@ -1,5 +1,5 @@
 import { assertEquals } from "https://deno.land/std@0.208.0/assert/mod.ts"
-import { arePositionsAdjacent, solve, solve2 } from "./day-3.ts"
+import { arePositionsAdjacent, solve, solve2 } from "./day_3.ts"
 
 const exampleInput = `467..114..
 ...*......

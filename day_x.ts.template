@@ -8,5 +8,5 @@ export const solve2 = (input: string): number => {
   return 0
 }
 
-console.log(solve(await readInput("day-x")))
-console.log(solve2(await readInput("day-x")))
+console.log(solve(await readInput("day_x")))
+console.log(solve2(await readInput("day_x")))

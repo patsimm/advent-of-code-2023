@@ -1,5 +1,5 @@
 import { assertEquals } from "https://deno.land/std@0.208.0/assert/mod.ts"
-import { solve, solve2 } from "./day-4.ts"
+import { solve, solve2 } from "./day_4.ts"
 
 const exampleInput = `Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53
 Card 2: 13 32 20 16 61 | 61 30 68 82 17 32 24 19

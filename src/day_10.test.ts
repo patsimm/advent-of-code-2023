@@ -1,5 +1,5 @@
 import { assertEquals } from "https://deno.land/std@0.208.0/assert/mod.ts"
-import { solve, solve2 } from "./day-10.ts"
+import { solve, solve2 } from "./day_10.ts"
 
 const exampleInput = `.....
 .S-7.

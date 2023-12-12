@@ -5,7 +5,7 @@ import {
   MapTable,
   solve,
   solve2,
-} from "./day-5.ts"
+} from "./day_5.ts"
 
 const exampleInput = `seeds: 79 14 55 13
 
