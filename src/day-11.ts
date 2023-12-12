@@ -1,11 +1,4 @@
-import { readInput, splitLines } from "./helper.ts"
-
-const galaxy = "#" as const
-const space = "." as const
-
-const parseLine = (line: string) => {
-  return line.trim().split("")
-}
+import { readInput, walkGrid } from "./helper.ts"
 
 type Universe = {
   size: [number, number]
@@ -17,23 +10,17 @@ type Galaxy = {
 }
 
 const parse = (input: string): Universe => {
-  const lines = splitLines(input)
-
   const galaxies: Galaxy[] = []
-  for (let y = 0; y < lines.length; y++) {
-    const line = lines[y]
-    for (let x = 0; x < line.length; x++) {
-      const char = line[x]
-      switch (char) {
-        case "#":
-          galaxies.push({ position: [x, y] })
-          break
-        default:
-      }
+  const size = walkGrid(input, (char, [x, y]) => {
+    switch (char) {
+      case "#":
+        galaxies.push({ position: [x, y] })
+        break
+      default:
     }
-  }
+  })
   return {
-    size: [lines[0].length, lines.length],
+    size,
     galaxies,
   }
 }
@@ -41,7 +28,7 @@ const parse = (input: string): Universe => {
 const expandColumn = (
   universe: Universe,
   x: number,
-  amount: number = 1,
+  amount = 1,
 ): Universe => {
   return {
     ...universe,
@@ -61,7 +48,7 @@ const expandColumn = (
 const expandRow = (
   universe: Universe,
   y: number,
-  amount: number = 1,
+  amount = 1,
 ): Universe => {
   return {
     ...universe,
