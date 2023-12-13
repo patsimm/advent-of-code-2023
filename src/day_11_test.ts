@@ -1,5 +1,5 @@
 import { assertEquals } from "https://deno.land/std@0.208.0/assert/mod.ts"
-import { solve } from "./day_11.ts"
+import { execSolve } from "./day_11.ts"
 
 const exampleInput = `...#......
 .......#..
@@ -13,16 +13,16 @@ const exampleInput = `...#......
 #...#.....`
 
 Deno.test(function solveTestInput() {
-  const result = solve(exampleInput, 1)
+  const result = execSolve(exampleInput, 1)
   assertEquals(result, 374)
 })
 
 Deno.test(function solveTestInput2() {
-  const result = solve(exampleInput, 9)
+  const result = execSolve(exampleInput, 9)
   assertEquals(result, 1030)
 })
 
 Deno.test(function solveTestInput3() {
-  const result = solve(exampleInput, 99)
+  const result = execSolve(exampleInput, 99)
   assertEquals(result, 8410)
 })

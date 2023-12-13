@@ -1,4 +1,4 @@
-import { readInput, splitLines } from "./helper.ts"
+import { splitLines } from "./helper.ts"
 
 const digitStrings = [
   "one",
@@ -70,5 +70,3 @@ export const solve = (input: string): number => {
 
   return sum
 }
-
-console.log(solve(await readInput("day_1")))

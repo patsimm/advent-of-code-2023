@@ -1,11 +1,4 @@
-import {
-  add,
-  equals,
-  neighbors,
-  readInput,
-  Vector,
-  walkGrid,
-} from "./helper.ts"
+import { add, equals, neighbors, Vector, walkGrid } from "./helper.ts"
 
 // | is a vertical pipe connecting north and south.
 // - is a horizontal pipe connecting east and west.
@@ -142,6 +135,3 @@ export const solve = (input: string): number => {
 export const solve2 = (input: string): number => {
   return 0
 }
-
-console.log(solve(await readInput("day_10")))
-console.log(solve2(await readInput("day_10")))

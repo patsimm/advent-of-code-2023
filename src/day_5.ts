@@ -1,4 +1,4 @@
-import { parseNumbers, readInput, splitLines } from "./helper.ts"
+import { parseNumbers, splitLines } from "./helper.ts"
 
 export type MapRange = {
   destStart: number
@@ -184,6 +184,3 @@ export const solve2 = (input: string): number => {
 
   return Math.min(...locations)
 }
-
-console.log(solve(await readInput("day_5")))
-console.log(solve2(await readInput("day_5")))

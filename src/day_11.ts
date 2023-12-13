@@ -1,4 +1,4 @@
-import { readInput, walkGrid } from "./helper.ts"
+import { walkGrid } from "./helper.ts"
 
 type Universe = {
   size: [number, number]
@@ -91,7 +91,7 @@ export const distance = (a: Galaxy, b: Galaxy) => {
   return distX + distY
 }
 
-export const solve = (input: string, amount: number): number => {
+export const execSolve = (input: string, amount: number): number => {
   const parsed = parse(input)
   const expanded = expand(parsed, amount)
 
@@ -106,5 +106,5 @@ export const solve = (input: string, amount: number): number => {
   return sum
 }
 
-console.log(solve(await readInput("day_11"), 1))
-console.log(solve(await readInput("day_11"), 1000000 - 1))
+export const solve = (input: string): number => execSolve(input, 1)
+export const solve2 = (input: string): number => execSolve(input, 1000000 - 1)

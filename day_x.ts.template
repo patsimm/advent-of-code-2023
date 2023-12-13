@@ -1,5 +1,3 @@
-import { readInput } from "./helper.ts"
-
 export const solve = (input: string): number => {
   return 0
 }
@@ -7,6 +5,3 @@ export const solve = (input: string): number => {
 export const solve2 = (input: string): number => {
   return 0
 }
-
-console.log(solve(await readInput("day_x")))
-console.log(solve2(await readInput("day_x")))

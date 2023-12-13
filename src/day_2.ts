@@ -1,4 +1,4 @@
-import { readInput, splitLines } from "./helper.ts"
+import { splitLines } from "./helper.ts"
 
 // only 12 red cubes, 13 green cubes, and 14 blue cubes
 const maxAmount = {
@@ -93,6 +93,3 @@ export const solve2 = (input: string): number => {
     return result + power
   }, 0)
 }
-
-console.log(solve(await readInput("day_2")))
-console.log(solve2(await readInput("day_2")))
